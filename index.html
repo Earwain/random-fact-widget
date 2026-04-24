@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Random Fact</title>
+<style>
+  body {
+    margin: 0;
+    font-family: Segoe UI, sans-serif;
+    background: #0d1117;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+  }
+
+  .card {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    color: #e6edf3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .fact {
+    font-size: 0.8rem;
+    line-height: 1.3;
+    overflow: hidden;
+  }
+
+  .btn {
+    align-self: center;
+    background: #58a6ff;
+    color: #0d1117;
+    border: none;
+    border-radius: 6px;
+    padding: 4px 10px;
+    font-size: 0.7rem;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="fact" id="fact">Loading fact...</div>
+    <button class="btn" onclick="loadFact()">New</button>
+  </div>
+
+<script>
+async function loadFact() {
+  const el = document.getElementById('fact');
+  el.textContent = 'Loading...';
+  try {
+    const res = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en');
+    const data = await res.json();
+    el.textContent = data.text;
+  } catch {
+    el.textContent = 'Fact engine offline.';
+  }
+}
+loadFact();
+</script>
+</body>
+</html>
